@@ -2,20 +2,28 @@ const Sequelize = require('sequelize/lib/sequelize');
 
 const conf = require('./config')["dev"];
 
-const sequelize = new Sequelize(conf.dbname, conf.username, conf.password, {
-    host: conf.domain,
-    port: conf.port,
-    dialect: conf.dialect
-});
 
-sequelize
-    .authenticate()
-    .then(() => {
-        console.log('Connected successfully');
-    })
-    .catch(err => {
-        console.log(err);
+const sequelize = new Sequelize(conf.dbname, conf.username, conf.password, {
+        host: "localhost",
+        dialect: conf.dialect
     });
 
-module.exports.sequelize = sequelize;
+const createTables = () => {
+    sequelize.sync()
+        .then(result => console.log(`Sync result: ${result.options}`));
+}
 
+const testConnection = () => {
+    sequelize.authenticate()
+        .then(() => {
+            console.log(`Successfully connected to ${conf.dbname}`);
+        })
+        .catch(err => {
+            console.log(err);
+        });
+};
+
+
+module.exports.sequelize = sequelize;
+module.exports.testConnection = testConnection;
+module.exports.createTables = createTables;

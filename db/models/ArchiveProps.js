@@ -1,21 +1,12 @@
 const sequelize = require('../index').sequelize;
 const DataTypes = require('sequelize');
-const {conf} = require("../config")["dev"];
-const {Link} = require("./Link");
+const {ArchiveLink} = require("./ArchiveLink");
 
 
-const ArchiveProps = sequelize.define('archive', {
+const ArchiveProps = sequelize.define('archive_props', {
     name: {
         type: DataTypes.STRING,
         field: 'name'
-    },
-    password: {
-        type: DataTypes.STRING,
-        field: 'password'
-    },
-    creation_time: {
-        type: 'TIMESTAMP',
-        field: 'creation_time'
     },
     expire_time: {
         type: 'TIMESTAMP',
@@ -24,6 +15,6 @@ const ArchiveProps = sequelize.define('archive', {
 }, {underscored: true});
 
 // One to one relationship
-ArchiveProps.belongsTo(Link, {onDelete: 'cascade'});
+ArchiveLink.hasOne(ArchiveProps, {foreignKeyConstraint: true});
 
 module.exports.ArchiveProps = ArchiveProps;
