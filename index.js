@@ -6,9 +6,6 @@ const bodyParser = require('body-parser');
 const app = express();
 const testConnection = require('./db/index').testConnection;
 const createTables = require('./db/index').createTables;
-const archiver = require('archiver');
-
-archiver.registerFormat('zip-encrypted', require('archiver-zip-encrypted'));
 
 testConnection();
 createTables();
@@ -18,8 +15,8 @@ app.use(bodyParser.json());
 app.use(cors());
 app.set('port', process.env.PORT || 3001);
 
-app.use('/upload', require('./controllers/UploadFilesController'));
-app.use('/files', require('./controllers/ReceiveFilesController'));
+app.use('/api/upload', require('./controllers/UploadFilesController'));
+app.use('/api/files', require('./controllers/ReceiveFilesController'));
 
 const httpsOptions = {
     key: fs.readFileSync('./key.pem'),

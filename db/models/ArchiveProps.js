@@ -4,17 +4,16 @@ const {ArchiveLink} = require("./ArchiveLink");
 
 
 const ArchiveProps = sequelize.define('archive_props', {
-    name: {
+    unique_id: {
         type: DataTypes.STRING,
-        field: 'name'
-    },
-    expire_time: {
-        type: 'TIMESTAMP',
-        field: 'expire_time'
+        field: 'unique_id'
     }
 }, {underscored: true});
 
 // One to one relationship
-ArchiveLink.hasOne(ArchiveProps, {foreignKeyConstraint: true});
+ArchiveLink.hasOne(ArchiveProps, {
+    foreignKeyConstraint: true,
+    onDelete: 'cascade'
+});
 
 module.exports.ArchiveProps = ArchiveProps;

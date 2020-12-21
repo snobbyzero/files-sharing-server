@@ -1,6 +1,5 @@
 const sequelize = require('../index').sequelize;
 const DataTypes = require('sequelize');
-const {ArchiveProps} = require("./ArchiveProps");
 
 const ArchiveLink = sequelize.define('archive_link', {
     link: {
@@ -10,6 +9,10 @@ const ArchiveLink = sequelize.define('archive_link', {
     password: {
         type: DataTypes.STRING,
         field: 'password'
+    },
+    link_only: {
+        type: DataTypes.BOOLEAN,
+        field: 'link_only'
     }
 }, {underscored: true});
 
